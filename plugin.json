@@ -1,0 +1,21 @@
+{
+  "author":"BuildFire"
+,"pluginName":"simpleSliderPlugin"
+,"supportEmail":"support@buildfire.com"
+,"pluginIcon": "icon.png"
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":true
+  }
+}
+,"widget":{
+},
+  "features" : [],
+  "languages" : ["en"]
+}
