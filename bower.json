@@ -2,14 +2,14 @@
   "name": "simpleSlider-plugin",
   "version": "0.0.0",
   "authors": [
-    "rishabhdixit <vish250491@gmail.com>"
+    "vishnusinghshekhawat <vish250491@gmail.com>"
   ],
-  "description": "\"social-plugin\"",
+  "description": "\"simpleSlider-plugin\"",
   "moduleType": [
     "node"
   ],
   "keywords": [
-    "social-plugin",
+    "simpleSlider-plugin",
     "testing",
     "buildfire",
     "karma",
