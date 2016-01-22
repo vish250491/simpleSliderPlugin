@@ -51,11 +51,9 @@
               if(event.data && event.data.content){
                   if (!WidgetHome.data.content)
                       WidgetHome.data.content = {};
-
-
-                  WidgetHome.data.content = event.data.content.carouselImages;
-                  $rootScope.itemDetailsBackgroundImage = WidgetHome.bgImage;
-                  if (!$scope.$$phase)$scope.$digest();
+                      WidgetHome.data.content.carouselImages = event.data.content.carouselImages;
+                      $scope.$emit("Carousel:LOADED");
+                      if (!$scope.$$phase)$scope.$digest();
               }
           }
         });

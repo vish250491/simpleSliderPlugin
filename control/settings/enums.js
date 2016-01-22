@@ -2,9 +2,9 @@
 
 (function (angular) {
   angular.module('simpleSliderPluginSettings')
-    .constant('TAG_NAMES', {
-      UVO_INFO: 'uvoInfo'
-    })
+      .constant('TAG_NAMES', {
+        SIMPLE_SLIDER_INFO: 'simpleSliderInfo'
+      })
     .constant('STATUS_CODE', {
       INSERTED: 'inserted',
       UPDATED: 'updated',
