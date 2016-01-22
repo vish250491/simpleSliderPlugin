@@ -1,0 +1,22 @@
+{
+  "author":"BuildFire"
+,"pluginName":"simpleSliderPlugin",
+  "pluginDescription":"A plugin that uses to create carousal and customise its speed"
+,"supportEmail":"support@buildfire.com"
+,"pluginIcon": "icon.png"
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":true
+  }
+}
+,"widget":{
+},
+  "features" : [],
+  "languages" : ["en"]
+}
