@@ -52,14 +52,8 @@
                 if (!$scope.$$phase)$scope.$digest();
             };
 
-            updateMasterItem(_data);
-
             function updateMasterItem(data) {
                 ContentHome.masterData = angular.copy(data);
-            }
-
-            function resetItem() {
-                ContentHome.data = angular.copy(ContentHome.masterData);
             }
 
             function isUnchanged(data) {
@@ -69,7 +63,7 @@
             /*
              * Go pull any previously saved data
              * */
-            var init = function () {
+            ContentHome.init = function () {
                 var success = function (result) {
                         console.info('init success result:', result);
                         if (Object.keys(result.data).length > 0) {
@@ -93,17 +87,17 @@
                             if (tmrDelay)clearTimeout(tmrDelay);
                         }
                         else if (err && err.code === STATUS_CODE.NOT_FOUND) {
-                            saveData(JSON.parse(angular.toJson(ContentHome.data)), TAG_NAMES.SIMPLE_SLIDER_INFO);
+                            ContentHome.saveData(JSON.parse(angular.toJson(ContentHome.data)), TAG_NAMES.SIMPLE_SLIDER_INFO);
                         }
                     };
                 DataStore.get(TAG_NAMES.SIMPLE_SLIDER_INFO).then(success, error);
             };
-            init();
+            ContentHome.init();
 
             /*
              * Call the datastore to save the data object
              */
-            var saveData = function (newObj, tag) {
+            ContentHome.saveData = function (newObj, tag) {
                 if (typeof newObj === 'undefined') {
                     return;
                 }
@@ -121,7 +115,7 @@
              * create an artificial delay so api isnt called on every character entered
              * */
             var tmrDelay = null;
-            var saveDataWithDelay = function (newObj) {
+            ContentHome.saveDataWithDelay = function (newObj) {
                 if (newObj) {
                     if (isUnchanged(newObj)) {
                         return;
@@ -130,7 +124,7 @@
                         clearTimeout(tmrDelay);
                     }
                     tmrDelay = setTimeout(function () {
-                        saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
+                        ContentHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
                     }, 500);
                 }
             };
@@ -139,7 +133,7 @@
              * */
             $scope.$watch(function () {
                 return ContentHome.data;
-            }, saveDataWithDelay, true);
+            }, ContentHome.saveDataWithDelay, true);
 
             // Function to validate youtube rss feed link entered by user.
 
