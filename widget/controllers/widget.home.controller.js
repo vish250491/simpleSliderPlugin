@@ -11,11 +11,11 @@
           $scope.$on("Carousel:LOADED", function () {
               if (!WidgetHome.view) {
                   console.log('if------', WidgetHome.view);
-                  WidgetHome.view = new Buildfire.components.carousel.view("#carousel",[], "WideScreen",WidgetHome.data.settings.speed);
+                  WidgetHome.view = new Buildfire.components.carousel.view("#carousel",[], "MobileScreen",WidgetHome.data.settings.speed);
                   WidgetHome.view._applySlider(WidgetHome.data.settings.speed);
               }
               if (WidgetHome && WidgetHome.data && WidgetHome.data.content &&  WidgetHome.data.content.carouselImages && (WidgetHome.data.content.carouselImages.length>0)) {
-                  WidgetHome.view.loadItems(WidgetHome.data.content.carouselImages,null,null,WidgetHome.data.settings.speed);
+                  WidgetHome.view.loadItems(WidgetHome.data.content.carouselImages,null,"MobileScreen",WidgetHome.data.settings.speed);
                   WidgetHome.view._applySlider(WidgetHome.data.settings.speed);
               } else {
                   WidgetHome.view.loadItems([]);
