@@ -367,7 +367,7 @@ buildfire.components.carousel.view.prototype = {
         } else if (layout == "Cinema") {
             this.height = Math.ceil(1 * this.width / 2.39);
         }else if(layout == "MobileScreen"){
-            this.height=1.68*this.width;
+            this.height=1.64*this.width;
             this.width=this.width;
         }
 

@@ -3,8 +3,8 @@
 (function (angular, window) {
   angular
     .module('simpleSliderPluginSettings')
-    .controller('SettingsHomeCtrl', ['$scope', 'Buildfire', 'DataStore', 'TAG_NAMES','STATUS_CODE','ACCOUNT_TYPE',
-      function ($scope, Buildfire, DataStore, TAG_NAMES, STATUS_CODE,ACCOUNT_TYPE) {
+    .controller('SettingsHomeCtrl', ['$scope', 'Buildfire', 'DataStore', 'TAG_NAMES','STATUS_CODE',
+      function ($scope, Buildfire, DataStore, TAG_NAMES, STATUS_CODE) {
 
         var _data = {
           "content": {
