@@ -21,16 +21,14 @@ module.exports = function (config) {
             './bower_components/angular-animate/angular-animate.min.js',
             './bower_components/angular-route/angular-route.min.js',
             './bower_components/angular-bootstrap/ui-bootstrap.min.js',
-            './bower_components/angular-ui-tinymce/src/tinymce.js',
-            './bower_components/tinymce-dist/tinymce.min.js',
+            './bower_components/tinymce/tinymce.js',
+            './bower_components/tinymce/tinymce.min.js',
             './test/assets/buildfire.js',
             'control/content/**/*.js',
             './control/content/**/*.js',
             './control/settings/**/*.js',
             './widget/**/*.js',
-            './test/**/*.js',
-            //'http://localhost:63342/sdk/scripts/buildfire.js',
-            'http://localhost:63342/sdk/scripts/buildfire/components/carousel/carousel.js'
+            './test/**/*.js'
         ],
 
 
@@ -43,8 +41,6 @@ module.exports = function (config) {
         preprocessors: {
             'widget/**/!(js)/*.js': ['coverage'],
             'widget/*.js': ['coverage'],
-            'control/design/**/!(js)/*.js': ['coverage'],
-            'control/design/*.js': ['coverage'],
             'control/content/**/!(js)/*.js': ['coverage'],
             'control/content/*.js': ['coverage'],
             'control/settings/**/!(js)/*.js': ['coverage'],
