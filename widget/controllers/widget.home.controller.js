@@ -11,10 +11,12 @@
           $scope.$on("Carousel:LOADED", function () {
               if (!WidgetHome.view) {
                   console.log('if------', WidgetHome.view);
-                  WidgetHome.view = new Buildfire.components.carousel.view("#carousel", []);
+                  WidgetHome.view = new Buildfire.components.carousel.view("#carousel",[], "MobileScreen",WidgetHome.data.settings.speed);
+                  WidgetHome.view._applySlider(WidgetHome.data.settings.speed);
               }
-              if (WidgetHome && WidgetHome.data && WidgetHome.data.content &&  WidgetHome.data.content.carouselImages) {
-                  WidgetHome.view.loadItems(WidgetHome.data.content.carouselImages);
+              if (WidgetHome && WidgetHome.data && WidgetHome.data.content &&  WidgetHome.data.content.carouselImages && (WidgetHome.data.content.carouselImages.length>0)) {
+                  WidgetHome.view.loadItems(WidgetHome.data.content.carouselImages,null,"MobileScreen",WidgetHome.data.settings.speed);
+                  WidgetHome.view._applySlider(WidgetHome.data.settings.speed);
               } else {
                   WidgetHome.view.loadItems([]);
               }
@@ -28,10 +30,7 @@
               if (!WidgetHome.data.settings)
                 WidgetHome.data.settings = {};
 
-              if (!WidgetHome.data.content.carouselImages) {
-                $rootScope.itemListbackgroundImage = "";
-
-              } else {
+              if (WidgetHome.data.content.carouselImages) {
                   $scope.$emit("Carousel:LOADED");
               }
             }
@@ -54,6 +53,13 @@
                       WidgetHome.data.content.carouselImages = event.data.content.carouselImages;
                       $scope.$emit("Carousel:LOADED");
                       if (!$scope.$$phase)$scope.$digest();
+              }
+              if(event.data && event.data.settings){
+                  if (!WidgetHome.data.settings)
+                      WidgetHome.data.settings = {};
+                  WidgetHome.data.settings.speed = event.data.settings.speed;
+                  $scope.$emit("Carousel:LOADED");
+                  if (!$scope.$$phase)$scope.$digest();
               }
           }
         });
