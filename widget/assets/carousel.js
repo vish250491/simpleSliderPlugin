@@ -421,8 +421,11 @@ buildfire.components.carousel.view.prototype = {
                 itemsMobile: true,
                 autoHeight: false
             };
-
-            sliderOptions.autoplay = 3000;
+            if(speed==0){
+                sliderOptions.autoplay = 0;
+            }else{
+                sliderOptions.autoplay = speed;
+            }
             sliderOptions.autoplaySpeed =speed?speed: 0;
             sliderOptions.loop = true;
             me.$slider.owlCarousel(sliderOptions);
