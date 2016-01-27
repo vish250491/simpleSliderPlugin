@@ -14,12 +14,12 @@
                   var speed=WidgetHome.data.settings.speed*1000;
 
                   WidgetHome.view = new Buildfire.components.carousel.view("#carousel",[],  WidgetHome.data.design.mode,speed);
-                  WidgetHome.view._applySlider(speed);
+                 // WidgetHome.view._applySlider(speed);
               }
               if (WidgetHome && WidgetHome.data && WidgetHome.data.content &&  WidgetHome.data.content.carouselImages && (WidgetHome.data.content.carouselImages.length>0)) {
                   var speed=WidgetHome.data.settings.speed*1000;
                   WidgetHome.view.loadItems(WidgetHome.data.content.carouselImages,null, WidgetHome.data.design.mode,speed);
-                  WidgetHome.view._applySlider(speed);
+                //  WidgetHome.view._applySlider(speed);
               } else {
                   WidgetHome.view.loadItems([]);
               }

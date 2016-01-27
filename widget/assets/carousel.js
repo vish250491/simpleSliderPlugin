@@ -334,7 +334,7 @@ buildfire.components.carousel.view.prototype = {
         this._renderSlider();
 
         this._loadItems(items, appendItems);
-        this._loadImages();
+        this._loadImages(speed);
 
         if (!this.items.length) {
             this._hideSlider();
@@ -421,16 +421,17 @@ buildfire.components.carousel.view.prototype = {
                 itemsMobile: true,
                 autoHeight: false
             };
-            if(speed==0){
-                sliderOptions.autoplay = 0;
-            }else{
-                sliderOptions.autoplay = 3000;
-            }
+
+            sliderOptions.autoplay =(speed==0)? 0:3000;
             sliderOptions.autoplaySpeed =speed?speed: 800;
             sliderOptions.loop = true;
             me.$slider.owlCarousel(sliderOptions);
         }
-		$('.my-slide').show();
+
+        if(speed)
+        $('.my-slide').show();
+        else
+		$('.plugin-slide').show();
     },
     // destroy the slider if it's already in the DOM
     _destroySlider: function () {
@@ -450,21 +451,25 @@ buildfire.components.carousel.view.prototype = {
         me.selector.style.left = "0px";
         //me.selector.style.width = this.cssWidth;
         //me.selector.style.height = this.cssHeight;
-        me.selector.className = "my-slider text-center";
+        me.selector.className = "plugin-slider text-center";
     },
     // loop and append the images to the DOM
-    _loadImages: function () {
+    _loadImages: function (speed) {
         var items = this.items;
         var itemsLength = items.length;
 
         for (var i = 0; i < itemsLength; i++) {
-            this._appendItem(items[i], i);
+            this._appendItem(items[i], i,speed);
         }
     },
     // add new slider to the DOM
-    _appendItem: function (item, index) {
+    _appendItem: function (item, index,speed) {
         var slider = document.createElement("div");
-        slider.className = "my-slide";
+
+        if(speed)
+            slider.className = "my-slide";
+        else
+            slider.className = "plugin-slide";
 		
 		if(0 != index) {
 			slider.style.display = "none";
