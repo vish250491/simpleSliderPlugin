@@ -367,7 +367,7 @@ buildfire.components.carousel.view.prototype = {
         } else if (layout == "Cinema") {
             this.height = Math.ceil(1 * this.width / 2.39);
         }else if(layout == "MobileScreen"){
-            this.height=1.64*this.width;
+            this.height=(window.innerHeight/this.width)*this.width;
             this.width=this.width;
         }
 
@@ -424,9 +424,9 @@ buildfire.components.carousel.view.prototype = {
             if(speed==0){
                 sliderOptions.autoplay = 0;
             }else{
-                sliderOptions.autoplay = speed;
+                sliderOptions.autoplay = 3000;
             }
-            sliderOptions.autoplaySpeed =speed?speed: 0;
+            sliderOptions.autoplaySpeed =speed?speed: 800;
             sliderOptions.loop = true;
             me.$slider.owlCarousel(sliderOptions);
         }

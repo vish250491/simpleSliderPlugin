@@ -12,6 +12,9 @@
                 },
                 "settings": {
                     "speed": ""
+                },
+                "design":{
+                    "mode":""
                 }
             };
 

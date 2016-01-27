@@ -13,6 +13,9 @@
           "settings": {
             "speed": ""
 
+          },
+          "design":{
+            "mode":""
           }
         };
 
