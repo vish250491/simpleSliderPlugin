@@ -1,0 +1,22 @@
+
+<div class="item row clearfix" style="padding-bottom: 2%">
+    <div class="labels col-md-3 padding-right-zero pull-left">
+        <span>Carousal Type</span>
+    </div>
+    <div class="main pull-right col-md-9 padding-left-zero row">
+        <div class="radio radio-primary radio-inline">
+            <input id="channel" type="radio"
+                   ng-model="DesignHome.data.design.mode"
+                   ng-value="DesignHome.CAROUSAL_TYPE.WIDTH"
+                   name="accountType" class="ng-pristine ng-untouched ng-valid" value="WideScreen">
+            <label for="channel">WideScreen</label>
+        </div>
+        <div class="radio radio-primary radio-inline">
+            <input id="video" type="radio"
+                   ng-model="DesignHome.data.design.mode"
+                   ng-value="DesignHome.CAROUSAL_TYPE.HEIGHT"
+                   name="accountType" class="ng-pristine ng-untouched ng-valid" value="MobileScreen">
+            <label for="video">FullScreen</label>
+        </div>
+    </div>
+</div>

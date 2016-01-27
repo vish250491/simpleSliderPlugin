@@ -12,13 +12,14 @@
               if (!WidgetHome.view) {
                   console.log('if------', WidgetHome.view);
                   var speed=WidgetHome.data.settings.speed*1000;
-                  WidgetHome.view = new Buildfire.components.carousel.view("#carousel",[], "MobileScreen",speed);
-                  WidgetHome.view._applySlider(speed);
+
+                  WidgetHome.view = new Buildfire.components.carousel.view("#carousel",[],  WidgetHome.data.design.mode,speed);
+                 // WidgetHome.view._applySlider(speed);
               }
               if (WidgetHome && WidgetHome.data && WidgetHome.data.content &&  WidgetHome.data.content.carouselImages && (WidgetHome.data.content.carouselImages.length>0)) {
                   var speed=WidgetHome.data.settings.speed*1000;
-                  WidgetHome.view.loadItems(WidgetHome.data.content.carouselImages,null,"MobileScreen",speed);
-                  WidgetHome.view._applySlider(speed);
+                  WidgetHome.view.loadItems(WidgetHome.data.content.carouselImages,null, WidgetHome.data.design.mode,speed);
+                //  WidgetHome.view._applySlider(speed);
               } else {
                   WidgetHome.view.loadItems([]);
               }
@@ -31,8 +32,10 @@
                 WidgetHome.data.content = {};
               if (!WidgetHome.data.settings)
                 WidgetHome.data.settings = {};
+                  if (!WidgetHome.data.design)
+                      WidgetHome.data.design = {};
 
-              if (WidgetHome.data.content.carouselImages) {
+              if (WidgetHome.data.content.carouselImages || WidgetHome.data.design.mode) {
                   $scope.$emit("Carousel:LOADED");
               }
             }
@@ -60,6 +63,13 @@
                   if (!WidgetHome.data.settings)
                       WidgetHome.data.settings = {};
                   WidgetHome.data.settings.speed = event.data.settings.speed;
+                  $scope.$emit("Carousel:LOADED");
+                  if (!$scope.$$phase)$scope.$digest();
+              }
+              if(event.data && event.data.design){
+                  if (!WidgetHome.data.design)
+                      WidgetHome.data.design = {};
+                  WidgetHome.data.design.mode = event.data.design.mode;
                   $scope.$emit("Carousel:LOADED");
                   if (!$scope.$$phase)$scope.$digest();
               }
