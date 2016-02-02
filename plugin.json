@@ -1,7 +1,7 @@
 {
   "author":"BuildFire"
 ,"pluginName":"simpleSliderPlugin",
-  "pluginDescription":"A plugin that uses to create carousal and customise its speed"
+  "pluginDescription":"Image slide slidshow some of your most requested features all rolled into one"
 ,"supportEmail":"support@buildfire.com"
 ,"pluginIcon": "icon.png"
 ,"control":{
