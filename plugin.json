@@ -1,7 +1,7 @@
 {
   "author":"BuildFire"
-,"pluginName":"simpleSliderPlugin",
-  "pluginDescription":"Image slider slidshow some of your most requested features all rolled into one"
+,"pluginName":"Slider Plugin",
+  "pluginDescription":"Image slide slidshow some of your most requested features all rolled into one"
 ,"supportEmail":"support@buildfire.com"
 ,"pluginIcon": "icon.png"
 ,"control":{
