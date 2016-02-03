@@ -27,6 +27,7 @@ module.exports = function (config) {
             'control/content/**/*.js',
             './control/content/**/*.js',
             './control/settings/**/*.js',
+            './control/design/**/*.js',
             './widget/**/*.js',
             './test/**/*.js'
         ],
@@ -44,7 +45,9 @@ module.exports = function (config) {
             'control/content/**/!(js)/*.js': ['coverage'],
             'control/content/*.js': ['coverage'],
             'control/settings/**/!(js)/*.js': ['coverage'],
-            'control/settings/*.js': ['coverage']
+            'control/settings/*.js': ['coverage'],
+            'control/design/**/!(js)/*.js': ['coverage'],
+            'control/design/*.js': ['coverage']
         },
 
         plugins: [

@@ -50,6 +50,9 @@ describe('Unit : Controller - WidgetHomeCtrl', function () {
                 },
                 content:{
                     carouselImages:['SSASAS']
+                },
+                design:{
+                    mode:''
                 }
 
             };
