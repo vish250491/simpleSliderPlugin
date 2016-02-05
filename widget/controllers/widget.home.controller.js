@@ -3,8 +3,8 @@
 (function (angular) {
   angular
     .module('simpleSliderPluginWidget')
-    .controller('WidgetHomeCtrl', ['$scope', 'Buildfire', 'DataStore', 'TAG_NAMES', '$rootScope',
-      function ($scope, Buildfire, DataStore, TAG_NAMES, $rootScope) {
+    .controller('WidgetHomeCtrl', ['$scope', 'Buildfire', 'DataStore', 'TAG_NAMES', '$rootScope','CAROUSAL_TYPE',
+      function ($scope, Buildfire, DataStore, TAG_NAMES, $rootScope,CAROUSAL_TYPE) {
         var WidgetHome = this;
           WidgetHome.view=null;
 
@@ -32,10 +32,17 @@
                 WidgetHome.data.content = {};
               if (!WidgetHome.data.settings)
                 WidgetHome.data.settings = {};
-                  if (!WidgetHome.data.design)
+                  if (!WidgetHome.data.design){
                       WidgetHome.data.design = {};
+                      WidgetHome.data.design.mode_gap = true;
+                  }
+
 
               if (WidgetHome.data.content.carouselImages || WidgetHome.data.design.mode) {
+                  if( WidgetHome.data.design.mode==CAROUSAL_TYPE.MOBILESCEEN)
+                      WidgetHome.data.design.mode_gap=false;
+                  else
+                      WidgetHome.data.design.mode_gap=true;
                   $scope.$emit("Carousel:LOADED");
               }
             }
@@ -67,9 +74,18 @@
                   if (!$scope.$$phase)$scope.$digest();
               }
               if(event.data && event.data.design){
-                  if (!WidgetHome.data.design)
+                  if (!WidgetHome.data.design){
                       WidgetHome.data.design = {};
+                      WidgetHome.data.design.mode_gap=true;
+                  }
+
                   WidgetHome.data.design.mode = event.data.design.mode;
+
+                  if( WidgetHome.data.design.mode==CAROUSAL_TYPE.MOBILESCEEN)
+                      WidgetHome.data.design.mode_gap=false;
+                  else
+                      WidgetHome.data.design.mode_gap=true;
+
                   $scope.$emit("Carousel:LOADED");
                   if (!$scope.$$phase)$scope.$digest();
               }

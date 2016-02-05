@@ -15,7 +15,8 @@
 
           },
           "design":{
-            "mode":""
+            "mode":"",
+            "mode_gap":true
           }
         };
 

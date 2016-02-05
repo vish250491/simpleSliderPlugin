@@ -36,6 +36,9 @@
 
 </head>
 <body class="no-scroll">
-<div ng-view=""></div>
+<div ng-controller="WidgetHomeCtrl as WidgetHome">
+  <div ng-show="WidgetHome.data.design.mode_gap" id="gapdiv" style="padding-bottom: 50%"></div>
+  <div id="carousel" ></div>
+</div>
 </body>
 </html>
