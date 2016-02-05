@@ -13,8 +13,8 @@
     <span>Speed </span>
   </div>
   <div class="main col-md-9 pull-right">
-    <input id="url" name="url" type="text" class="form-control"
-           ng-model="SettingsHome.data.settings.speed">
+    <input id="url" name="url" type="text" min="0" max="99" class="form-control"
+           ng-model="SettingsHome.data.settings.speed"  number-mask>
   </div>
   <hr class="none">
   <br>
