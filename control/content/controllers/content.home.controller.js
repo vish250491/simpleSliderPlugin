@@ -48,8 +48,8 @@
 
             // this method will be called when you change the order of items
             ContentHome.editor.onOrderChange = function (item, oldIndex, newIndex) {
-                var temp = ContentHome.info.data.content.carouselImages[oldIndex];
-                ContentHome.data.content.carouselImages[oldIndex] = ContentHome.info.data.content.carouselImages[newIndex];
+                var temp = ContentHome.data.content.carouselImages[oldIndex];
+                ContentHome.data.content.carouselImages[oldIndex] = ContentHome.data.content.carouselImages[newIndex];
                 ContentHome.data.content.carouselImages[newIndex] = temp;
                 if (!$scope.$$phase)$scope.$digest();
             };
