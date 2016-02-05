@@ -30,6 +30,9 @@
             ContentHome.editor.onAddItems = function (items) {
                 console.log('Content info==========================',ContentHome.info);
 
+                if(!ContentHome.data) {
+                    ContentHome.data = angular.copy(_data);
+                }
                 if (!ContentHome.data.design){
                     ContentHome.data.design = {};
                     ContentHome.data.design.mode_gap=true;
