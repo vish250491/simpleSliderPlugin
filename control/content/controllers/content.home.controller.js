@@ -21,7 +21,7 @@
 
             var ContentHome=this;
             ContentHome.masterData = null;
-            ContentHome.data = angular.copy(_data);
+//            ContentHome.data = angular.copy(_data);
 
             // create a new instance of the buildfire carousel editor
             ContentHome.editor = new Buildfire.components.carousel.editor("#carousel");
@@ -76,6 +76,10 @@
                         if (ContentHome.data) {
                             if (!ContentHome.data.content)
                                 ContentHome.data.content = {};
+                            if(!ContentHome.data.settings)
+                                ContentHome.data.settings = {speed: 0};
+                            if(!ContentHome.data.design)
+                                ContentHome.data.design = {"mode":"", "mode_gap":true };
 
                             if (!ContentHome.data.content.carouselImages)
                                 ContentHome.editor.loadItems([]);
@@ -83,6 +87,7 @@
                                 ContentHome.editor.loadItems(ContentHome.data.content.carouselImages);
                             updateMasterItem(ContentHome.data);
                         }
+
                         if (tmrDelay)clearTimeout(tmrDelay);
                     }
                     , error = function (err) {
