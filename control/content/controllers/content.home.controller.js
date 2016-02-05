@@ -30,11 +30,6 @@
             ContentHome.editor.onAddItems = function (items) {
                 console.log('Content info==========================',ContentHome.info);
 
-                if (!ContentHome.data.design){
-                    ContentHome.data.design = {};
-                    ContentHome.data.design.mode_gap=true;
-                }
-
                 if (ContentHome && ContentHome.data && ContentHome.data.content && !ContentHome.data.content.carouselImages)
                     ContentHome.data.content.carouselImages = [];
                 ContentHome.data.content.carouselImages.push.apply(ContentHome.data.content.carouselImages, items);
