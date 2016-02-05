@@ -22,8 +22,5 @@
       NOT_ITEM_ARRAY: 'Array of Items not provided',
       ITEM_ARRAY_FOUND: 'Array of Items provided'
     })
-      .constant('ACCOUNT_TYPE', {
-        FREE: 'free',
-        PREMIUM: 'premium'
-      })
+
 })(window.angular);

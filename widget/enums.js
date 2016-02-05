@@ -5,6 +5,10 @@
     .constant('TAG_NAMES', {
         SIMPLE_SLIDER_INFO:'simpleSliderInfo'
     })
+      .constant('CAROUSAL_TYPE', {
+        WIDESCREEN: 'WideScreen',
+        MOBILESCEEN: 'MobileScreen'
+      })
     .constant('STATUS_CODE', {
       INSERTED: 'inserted',
       UPDATED: 'updated',
@@ -22,66 +26,5 @@
       NOT_ITEM_ARRAY: 'Array of Items not provided',
       ITEM_ARRAY_FOUND: 'Array of Items provided'
     })
-    .constant('WORLD_WEATHER', {
-      API_KEY: 'c0fbf1422cd81e949fc330b0da807'
-    })
-    .constant('RECOMMENDATIONS', {
-      0: {
-        condition: 'Low',
-        title: 'You can safely stay outside'
-      },
-      1: {
-        condition: 'Low',
-        title: 'You can safely stay outside'
-      },
-      2: {
-        condition: 'Low',
-        title: 'You can safely stay outside'
-      },
-      3: {
-        condition: 'Moderate',
-        title: 'Take precautions',
-        steps: ['UVO', 'Suncreen 30+']
-      },
-      4: {
-        condition: 'Moderate',
-        title: 'Take precautions',
-        steps: ['UVO', 'Suncreen 30+']
-      },
-      5: {
-        condition: 'Moderate',
-        title: 'Take precautions',
-        steps: ['UVO', 'Suncreen 30+']
-      },
-      6: {
-        condition: 'High',
-        title: 'Protection Needed',
-        steps: ['UVO', 'Sunscreen 30+', 'Hat/Sunglasses']
-      },
-      7: {
-        condition: 'High',
-        title: 'Protection Needed',
-        steps: ['UVO', 'Sunscreen 30+', 'Hat/Sunglasses']
-      },
-      8: {
-        condition: 'Very High',
-        title: 'Caution Advised',
-        steps: ['UVO', 'Sunscreen 30+', 'Hat/Sunglasses', 'Seek Shade']
-      },
-      9: {
-        condition: 'Very High',
-        title: 'Caution Advised',
-        steps: ['UVO', 'Sunscreen 30+', 'Hat/Sunglasses', 'Seek Shade']
-      },
-      10: {
-        condition: 'Very High',
-        title: 'Caution Advised',
-        steps: ['UVO', 'Sunscreen 30+', 'Hat/Sunglasses', 'Seek Shade']
-      },
-      11: {
-        condition: 'Extreme',
-        title: 'Avoid being outdoors',
-        steps: ['UVO', 'Sunscreen 30+', 'Hat/Sunglasses', 'Seek Shade']
-      }
-    })
+
 })(window.angular);
