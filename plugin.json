@@ -1,12 +1,7 @@
 {
   "author":"BuildFire"
-<<<<<<< HEAD
 ,"pluginName":"Image Gallery and Info Slider",
   "pluginDescription":"Use this plugin to showcase your images in an image gallery or use it to provide slide-by-slide instructions."
-=======
-,"pluginName":"Slider Plugin",
-  "pluginDescription":"Image slide slidshow some of your most requested features all rolled into one"
->>>>>>> 473d7dec326f702fe176cff467f30f09f7e2f3c6
 ,"supportEmail":"support@buildfire.com"
 ,"pluginIcon": "icon.png"
 ,"control":{
