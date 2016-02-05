@@ -128,7 +128,7 @@
                     }
                     tmrDelay = setTimeout(function () {
                         ContentHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
-                    }, 500);
+                    }, 1000);
                 }
             };
             /*

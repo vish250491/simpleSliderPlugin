@@ -88,7 +88,7 @@
             }
             tmrDelay = setTimeout(function () {
               SettingsHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
-            }, 500);
+            },1000);
           }
         };
 
