@@ -14,13 +14,14 @@
                     "speed": ""
                 },
                 "design":{
-                    "mode":""
+                    "mode":"",
+                    "mode_gap":true
                 }
             };
 
             var ContentHome=this;
             ContentHome.masterData = null;
-            ContentHome.data = angular.copy(_data);
+//            ContentHome.data = angular.copy(_data);
 
             // create a new instance of the buildfire carousel editor
             ContentHome.editor = new Buildfire.components.carousel.editor("#carousel");
@@ -28,6 +29,15 @@
             // this method will be called when a new item added to the list
             ContentHome.editor.onAddItems = function (items) {
                 console.log('Content info==========================',ContentHome.info);
+
+                if(!ContentHome.data) {
+                    ContentHome.data = angular.copy(_data);
+                }
+                if (!ContentHome.data.design){
+                    ContentHome.data.design = {};
+                    ContentHome.data.design.mode_gap=true;
+                }
+
                 if (ContentHome && ContentHome.data && ContentHome.data.content && !ContentHome.data.content.carouselImages)
                     ContentHome.data.content.carouselImages = [];
                 ContentHome.data.content.carouselImages.push.apply(ContentHome.data.content.carouselImages, items);
@@ -48,8 +58,8 @@
 
             // this method will be called when you change the order of items
             ContentHome.editor.onOrderChange = function (item, oldIndex, newIndex) {
-                var temp = ContentHome.info.data.content.carouselImages[oldIndex];
-                ContentHome.data.content.carouselImages[oldIndex] = ContentHome.info.data.content.carouselImages[newIndex];
+                var temp = ContentHome.data.content.carouselImages[oldIndex];
+                ContentHome.data.content.carouselImages[oldIndex] = ContentHome.data.content.carouselImages[newIndex];
                 ContentHome.data.content.carouselImages[newIndex] = temp;
                 if (!$scope.$$phase)$scope.$digest();
             };
@@ -74,6 +84,10 @@
                         if (ContentHome.data) {
                             if (!ContentHome.data.content)
                                 ContentHome.data.content = {};
+                            if(!ContentHome.data.settings)
+                                ContentHome.data.settings = {speed: 0};
+                            if(!ContentHome.data.design)
+                                ContentHome.data.design = {"mode":"", "mode_gap":true };
 
                             if (!ContentHome.data.content.carouselImages)
                                 ContentHome.editor.loadItems([]);
@@ -81,6 +95,7 @@
                                 ContentHome.editor.loadItems(ContentHome.data.content.carouselImages);
                             updateMasterItem(ContentHome.data);
                         }
+
                         if (tmrDelay)clearTimeout(tmrDelay);
                     }
                     , error = function (err) {
@@ -121,7 +136,7 @@
                     }
                     tmrDelay = setTimeout(function () {
                         ContentHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
-                    }, 500);
+                    }, 1000);
                 }
             };
             /*

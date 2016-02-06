@@ -8,7 +8,6 @@
         maximum-scale=1.0">
 
   <!-- CSS -->
-  <link href="css/style.css" rel="stylesheet">
   <link href="../../../styles/helper.css" rel="stylesheet">
   <link href="../../../styles/siteIcons.css" rel="stylesheet">
   <link rel="stylesheet" href="../../../styles/appStyle.css">
@@ -36,6 +35,9 @@
 
 </head>
 <body class="no-scroll">
-<div ng-view=""></div>
+<div ng-controller="WidgetHomeCtrl as WidgetHome">
+  <div ng-show="WidgetHome.data.design.mode_gap" id="gapdiv" style="padding-bottom: 50%"></div>
+  <div id="carousel" ></div>
+</div>
 </body>
 </html>
