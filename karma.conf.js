@@ -15,14 +15,14 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            './bower_components/jquery/dist/jquery.min.js',
-            './bower_components/angular/angular.js',
-            './bower_components/angular-mocks/angular-mocks.js',
-            './bower_components/angular-animate/angular-animate.min.js',
-            './bower_components/angular-route/angular-route.min.js',
-            './bower_components/angular-bootstrap/ui-bootstrap.min.js',
-            './bower_components/tinymce/tinymce.js',
-            './bower_components/tinymce/tinymce.min.js',
+            './test/assets/bower_components/jquery/dist/jquery.min.js',
+            './test/assets/bower_components/angular/angular.js',
+            './test/assets/bower_components/angular-mocks/angular-mocks.js',
+            './test/assets/bower_components/angular-animate/angular-animate.min.js',
+            './test/assets/bower_components/angular-route/angular-route.min.js',
+            './test/assets/bower_components/angular-bootstrap/ui-bootstrap.min.js',
+            './test/assets/bower_components/tinymce/tinymce.js',
+            './test/assets/bower_components/tinymce/tinymce.min.js',
             './test/assets/buildfire.js',
             'control/content/**/*.js',
             './control/content/**/*.js',
