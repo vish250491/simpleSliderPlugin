@@ -7,14 +7,15 @@
       function ($scope, Buildfire, DataStore, TAG_NAMES, $rootScope,CAROUSAL_TYPE) {
         var WidgetHome = this;
           WidgetHome.view=null;
-
+          WidgetHome.firstTime= true;
           $scope.$on("Carousel:LOADED", function () {
               if (!WidgetHome.view) {
                   console.log('if------', WidgetHome.view);
                   var speed=WidgetHome.data.settings.speed*1000;
 
                   WidgetHome.view = new Buildfire.components.carousel.view("#carousel",[],  WidgetHome.data.design.mode,speed);
-                 // WidgetHome.view._applySlider(speed);
+                  WidgetHome.view.loadItems([],null, WidgetHome.data.design.mode,speed);
+
               }
               if (WidgetHome && WidgetHome.data && WidgetHome.data.content &&  WidgetHome.data.content.carouselImages && (WidgetHome.data.content.carouselImages.length>0)) {
                   var speed=WidgetHome.data.settings.speed*1000;
@@ -28,10 +29,15 @@
         var init = function () {
           var success = function (result) {
               WidgetHome.data = result.data;
-              if (!WidgetHome.data.content)
-                WidgetHome.data.content = {};
-              if (!WidgetHome.data.settings)
-                WidgetHome.data.settings = {};
+              if (!WidgetHome.data.content){
+                  WidgetHome.data.content = {};
+              }
+
+              if (!WidgetHome.data.settings){
+                  WidgetHome.data.settings = {};
+                  WidgetHome.data.settings.speed=3;
+              }
+
                   if (!WidgetHome.data.design){
                       WidgetHome.data.design = {};
                       WidgetHome.data.design.mode_gap = true;
@@ -58,6 +64,7 @@
 
           Buildfire.datastore.onUpdate(function (event) {
           if (event.tag == TAG_NAMES.SIMPLE_SLIDER_INFO) {
+              WidgetHome.firstTime=false;
             console.log(">>>>>>>>>>>>>>>", event.data);
               if(event.data && event.data.content){
                   if (!WidgetHome.data.content)
