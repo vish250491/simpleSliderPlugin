@@ -60,6 +60,7 @@
 
               if(!SettingsHome.data.settings.speed)
                SettingsHome.data.settings.speed = 0;
+              updateMasterItem(SettingsHome.data);
             }
           };
           SettingsHome.error = function (err) {

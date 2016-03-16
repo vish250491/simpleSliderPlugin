@@ -14,7 +14,8 @@
                     "speed": ""
                 },
                 "design":{
-                    "mode":""
+                    "mode":"",
+                    "mode_gap":true
                 }
             };
 
@@ -38,7 +39,7 @@
             DesignHome.init = function () {
                 var success = function (result) {
                         console.info('init success result:', result);
-                        if (Object.keys(result.data).length > 0) {
+                        if (result) {
                             DesignHome.data = result.data;
                         }
                         if (DesignHome.data) {
