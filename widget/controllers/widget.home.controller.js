@@ -7,7 +7,34 @@
       function ($scope, Buildfire, DataStore, TAG_NAMES, $rootScope,CAROUSAL_TYPE) {
         var WidgetHome = this;
           WidgetHome.view=null;
-          WidgetHome.firstTime= true;
+          var _dummyData={
+              "content":{
+                  "carouselImages":[
+                      {
+                          "action":"noAction",
+                          "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7bdab0c0-f82b-11e5-8dca-3f9a537544dc.jpg?fit=crop&w=342&h=193",
+                          "title":"image"
+                      },
+                      {
+                          "action":"noAction",
+                          "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7cc44d70-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                          "title":"image"
+                      },
+                      {
+                          "action":"noAction",
+                          "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7d9a8930-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                          "title":"image"
+                      }
+                  ]
+              },
+              "settings":{
+                  "speed":"2"
+              },
+              "design":{
+                  "mode":"",
+                  "mode_gap":true
+              }
+          }
           $scope.$on("Carousel:LOADED", function () {
               if (!WidgetHome.view) {
                   console.log('if------', WidgetHome.view);
@@ -28,7 +55,12 @@
 
         var init = function () {
           var success = function (result) {
-              WidgetHome.data = result.data;
+              if(!result.id){
+                  WidgetHome.data = _dummyData;
+              }else{
+                  WidgetHome.data = result.data;
+              }
+
               if (!WidgetHome.data.content){
                   WidgetHome.data.content = {};
               }
