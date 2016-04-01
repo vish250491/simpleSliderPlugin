@@ -7,21 +7,63 @@
       function ($scope, Buildfire, DataStore, TAG_NAMES, STATUS_CODE) {
 
         var _data = {
-          "content": {
-            "carouselImages": []
+          "content":{
+            "carouselImages":[
+              {
+                "action":"noAction",
+                "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7bdab0c0-f82b-11e5-8dca-3f9a537544dc.jpg?fit=crop&w=342&h=193",
+                "title":"image"
+              },
+              {
+                "action":"noAction",
+                "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7cc44d70-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                "title":"image"
+              },
+              {
+                "action":"noAction",
+                "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7d9a8930-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                "title":"image"
+              }
+            ]
           },
-          "settings": {
-            "speed": ""
-
+          "settings":{
+            "speed":"2"
           },
           "design":{
             "mode":"",
             "mode_gap":true
           }
-        };
+        }
 
         var SettingsHome=this;
-        SettingsHome.masterData = null;
+        SettingsHome.masterData = {
+          "content":{
+            "carouselImages":[
+              {
+                "action":"noAction",
+                "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7bdab0c0-f82b-11e5-8dca-3f9a537544dc.jpg?fit=crop&w=342&h=193",
+                "title":"image"
+              },
+              {
+                "action":"noAction",
+                "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7cc44d70-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                "title":"image"
+              },
+              {
+                "action":"noAction",
+                "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7d9a8930-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                "title":"image"
+              }
+            ]
+          },
+          "settings":{
+            "speed":"2"
+          },
+          "design":{
+            "mode":"",
+            "mode_gap":true
+          }
+        }
         SettingsHome.data = angular.copy(_data);
 
 
@@ -53,13 +95,23 @@
           SettingsHome.success = function (result) {
             console.info('init success result:', result);
             if (result) {
-              SettingsHome.data = result.data;
-              if (!SettingsHome.data.settings){
-                SettingsHome.data.settings = {};
+              if(!result.id){
+                SettingsHome.data=_data;
+              }else{
+                console.info('init success result:', result);
+
+                  SettingsHome.data = result.data;
+                if (!SettingsHome.data.settings){
+                  SettingsHome.data.settings = {};
+                }
+
+                if(!SettingsHome.data.settings.speed)
+                  SettingsHome.data.settings.speed = 0;
+                updateMasterItem(SettingsHome.data);
               }
 
-              if(!SettingsHome.data.settings.speed)
-               SettingsHome.data.settings.speed = 0;
+
+
             }
           };
           SettingsHome.error = function (err) {

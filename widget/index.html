@@ -31,12 +31,48 @@
   <script src="app.services.js"></script>
   <script src="controllers/widget.home.controller.js"></script>
   <link rel="stylesheet" href="../../../styles/transitionAnimation.css">
+  <style>
+    #owl-demo .item img{
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  </style>
+<script>
+  $(document).ready(function() {
+setTimeout(function(){
+  $("#owl-demo").owlCarousel({
 
+    navigation: false,
+    dots: false,
+    slideSpeed: 800,
+    paginationSpeed: 800,
+    singleItem: true,
+    pagination: false,
+    items: 1,
+    itemsMobile: true,
+    //lazyLoad:true,
+    autoHeight: false,
+    autoplay: true,
+    autoplaySpeed:800,
+    loop : true
+  });
+  },1000)
+
+  });
+</script>
 </head>
 <body class="no-scroll">
 <div ng-controller="WidgetHomeCtrl as WidgetHome">
   <div ng-show="WidgetHome.data.design.mode_gap" id="gapdiv" style="padding-bottom: 50%"></div>
-  <div id="carousel" ></div>
+  <div id="carousel" >
+
+  </div>
+ <!-- <div id="owl-demo" ng-if="(! WidgetHome.data.content.carouselImages.length) && WidgetHome.firstTime" class="owl-carousel">
+    <div class="item"><img src="assets/images/sample_1.jpg" alt="Owl Image"></div>
+    <div class="item"><img src="assets/images/sample_2.jpg" alt="Owl Image"></div>
+    <div class="item"><img src="assets/images/sample_3.jpg" alt="Owl Image"></div>
+  </div>-->
 </div>
 </body>
 </html>
