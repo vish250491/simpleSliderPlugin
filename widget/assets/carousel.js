@@ -341,18 +341,21 @@ buildfire.components.carousel.view.prototype = {
 
         this._loadItems(items, appendItems);
         this._loadImages(speed);
+var me = this;
+        setTimeout(function(){
+            if (!me.items.length) {
+                me._hideSlider();
+            } else {
+                me._showSlider();
+            }
 
-        if (!this.items.length) {
-            this._hideSlider();
-        } else {
-            this._showSlider();
-        }
+            // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
+            if (items instanceof Array && !items.length && !appendItems) {
+                return;
+            }
+            me._applySlider(speed);
+        },1000);
 
-        // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
-        if (items instanceof Array && !items.length && !appendItems) {
-            return;
-        }
-        this._applySlider(speed);
     },
     // allows you to append a single item or an array of items
     append: function (items) {
@@ -508,38 +511,46 @@ buildfire.components.carousel.view.prototype = {
 
         // Images
         var me = this;
-        var image = document.createElement("img");
+
         me.$slider = $(me.selector);
         if (me.items.length > 1) {
             // Add data-src attr for lazyLoad
-
+            console.log('two inout',item.iconUrl);
             buildfire.imageLib.local.cropImage(item.iconUrl, {
                 width: this.width,
                 height: this.height
             }, function (e, d) {
                 if (!e) {
+                    var image = document.createElement("img");
+                    console.log('two one',d);
                     image.setAttribute('data-src', d);
                     image.className = "owl-lazy";
                     image.style.transform = "translateZ(0)";
                     slider.appendChild(image);
                     me.selector.appendChild(slider);
                 }
+                else
+                    console.log('two error');
             });
 
         } else {
             // Add src since it will be static
             // image.src = buildfire.components.carousel._cropImage(item.iconUrl, { width: this.width, height: this.height });
-
+console.log('two inout',item.iconUrl);
             buildfire.imageLib.local.cropImage(item.iconUrl, {
                 width: this.width,
                 height: this.height
             }, function (e, d) {
                 if (!e) {
+                    var image = document.createElement("img");
+                    console.log('two',d);
                     image.src = d;
                     image.style.transform = "translateZ(0)";
                     slider.appendChild(image);
                     me.selector.appendChild(slider);
                 }
+                else
+                console.log('two error');
             });
 
         }
