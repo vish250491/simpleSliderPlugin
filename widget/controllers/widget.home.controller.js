@@ -102,14 +102,14 @@
                   if (!WidgetHome.data.content)
                       WidgetHome.data.content = {};
                       WidgetHome.data.content.carouselImages = event.data.content.carouselImages;
-                      $scope.$emit("Carousel:LOADED");
+                      //$scope.$emit("Carousel:LOADED");
                       if (!$scope.$$phase)$scope.$digest();
               }
               if(event.data && event.data.settings){
                   if (!WidgetHome.data.settings)
                       WidgetHome.data.settings = {};
                   WidgetHome.data.settings.speed = event.data.settings.speed;
-                  $scope.$emit("Carousel:LOADED");
+                  //$scope.$emit("Carousel:LOADED");
                   if (!$scope.$$phase)$scope.$digest();
               }
               if(event.data && event.data.design){
@@ -125,9 +125,10 @@
                   else
                       WidgetHome.data.design.mode_gap=true;
 
-                  $scope.$emit("Carousel:LOADED");
+
                   if (!$scope.$$phase)$scope.$digest();
               }
+              $scope.$emit("Carousel:LOADED");
           }
         });
 

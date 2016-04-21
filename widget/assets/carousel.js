@@ -65,7 +65,7 @@ buildfire.components.carousel.editor.prototype = {
         throw ("please handle onItemChange");
     },
     /* This will be triggered when the order of items changes
-       Example: if you move the first item location to be the second this will return item object, 0, 1 */
+     Example: if you move the first item location to be the second this will return item object, 0, 1 */
     onOrderChange: function (item, oldIndex, newIndex) {
         console.warn("please handle onOrderChange", item, oldIndex, newIndex);
     },
@@ -92,16 +92,16 @@ buildfire.components.carousel.editor.prototype = {
         }
     },
     // allows you to append a single item or an array of items
-    append: function(items){
-        if(!items)
+    append: function (items) {
+        if (!items)
             return;
-        else if(!(items instanceof Array) && typeof(items) == "object")
-            items=[items];
+        else if (!(items instanceof Array) && typeof(items) == "object")
+            items = [items];
 
-        this.loadItems(items,true);
+        this.loadItems(items, true);
     },
     // remove all items in list
-    clear: function(){
+    clear: function () {
         this._removeAll();
         this.onDeleteItem();
     },
@@ -117,7 +117,7 @@ buildfire.components.carousel.editor.prototype = {
     // append new sortable item to the DOM
     _appendItem: function (item) {
         var me = this,
-            // Create the required DOM elements
+        // Create the required DOM elements
             wrapper = document.createElement("div"),
             moveHandle = document.createElement("span"),
             mediaHolder = document.createElement("div"),
@@ -138,16 +138,16 @@ buildfire.components.carousel.editor.prototype = {
         editButton.className = "text-primary text";
         deleteButton.className = "btn-icon btn-delete-icon btn-danger transition-third";
 
-        image.src = buildfire.components.carousel._resizeImage(item.iconUrl, { width: 80, height: 40 });
+        image.src = buildfire.components.carousel._resizeImage(item.iconUrl, {width: 80, height: 40});
         title.innerHTML = item.title;
-        editButton.innerHTML = (item.action && item.action != "noAction") ? "Edit Action" : "Add Action";
+        editButton.innerHTML = (item.action && item.action != "noAction") ? "Edit Action/Link" : "Add Action/Link";
 
         // Append elements to the DOM
         wrapper.appendChild(moveHandle);
         wrapper.appendChild(mediaHolder);
         mediaHolder.appendChild(image);
         details.appendChild(title);
-        
+
         actionsWrapper.appendChild(editButton);
         actionsWrapper.appendChild(deleteButton);
 
@@ -167,7 +167,10 @@ buildfire.components.carousel.editor.prototype = {
                     me.items[itemIndex] = actionItem;
                     item = actionItem;
                     me.onItemChange(actionItem, itemIndex);
-                    parentElement.querySelector("img").src = buildfire.components.carousel._resizeImage(actionItem.iconUrl, { width: 80, height: 40 });
+                    parentElement.querySelector("img").src = buildfire.components.carousel._resizeImage(actionItem.iconUrl, {
+                        width: 80,
+                        height: 40
+                    });
                     parentElement.querySelector(".title").innerHTML = actionItem.title;
                     currentTarget.innerHTML = actionItem.action && actionItem.action != "noAction" ? "Edit Action" : "Add Action";
                 });
@@ -218,9 +221,9 @@ buildfire.components.carousel.editor.prototype = {
         var oldIndex = 0;
         // initialize add new item button
         me.selector.querySelector(".add-new-carousel").addEventListener("click", function () {
-            me._openImageLib( function (imageUrls) {
+            me._openImageLib(function (imageUrls) {
                 var newItems = [], currentItem = null;
-                for (var i = 0; i < imageUrls.length ; i++) {
+                for (var i = 0; i < imageUrls.length; i++) {
                     currentItem = buildfire.actionItems.create(null, imageUrls[i], 'image');
                     if (!currentItem.action) {
                         currentItem.action = "noAction";
@@ -230,7 +233,7 @@ buildfire.components.carousel.editor.prototype = {
                     currentItem = null;
                 }
 
-                if(newItems.length) {
+                if (newItems.length) {
                     me.loadItems(newItems, true);
                     me.onAddItems(newItems);
                 }
@@ -264,7 +267,7 @@ buildfire.components.carousel.editor.prototype = {
     },
     // a wrapper method over buildfire showDialog
     _openActionItem: function (item, callback) {
-        buildfire.actionItems.showDialog(item, { showIcon: true, allowNoAction: true }, function (err, actionItem) {
+        buildfire.actionItems.showDialog(item, {showIcon: true, allowNoAction: true}, function (err, actionItem) {
             if (err)
                 console.error("Error getting item details: ", err);
             else {
@@ -276,7 +279,7 @@ buildfire.components.carousel.editor.prototype = {
     },
     // a wrapper method over buildfire imageLib showDialog
     _openImageLib: function (callback) {
-        buildfire.imageLib.showDialog({ multiSelect : true ,showIcons :false }, function (err, result) {
+        buildfire.imageLib.showDialog({multiSelect: true, showIcons: false}, function (err, result) {
             if (err)
                 console.error("Error getting images: ", err);
             else
@@ -298,33 +301,36 @@ buildfire.components.carousel.editor.prototype = {
 };
 
 // This is the class that will be used in the mobile
-buildfire.components.carousel.view = function (selector, items, layout,speed) {
-	if (typeof($.fn) != "object" || !($.fn && $.fn.owlCarousel)) {
+buildfire.components.carousel.view = function (selector, items, layout, speed) {
+    if (typeof($.fn) != "object" || !($.fn && $.fn.owlCarousel)) {
         throw ("please add owlCarousel.js first to use carousel component");
     }
     this.selector = selector;
     this.items = [];
     this._initDimensions(layout);
     this._loadItems(items, false);
-    this.init(selector,speed);
-	window.dispatchEvent(new CustomEvent('resize'));
+    this.init(selector, speed);
+    window.dispatchEvent(new CustomEvent('resize'));
 };
 
 // Carousel view methods
 buildfire.components.carousel.view.prototype = {
     // will be called to initialize the setting in the constructor
-    init: function (selector,speed) {
+    init: function (selector, speed) {
         this.selector = buildfire.components.carousel._getDomSelector(selector);
         this._renderSlider();
         this._loadImages();
         if (this.items.length) {
-            this._applySlider(speed?speed:0);
+            if (typeof speed === 'undefined')
+                this._applySlider();
+            else
+                this._applySlider(speed);
         } else {
             this._hideSlider();
         }
     },
     // this method allows you to append or replace slider images
-    loadItems: function (items, appendItems, layout,speed) {
+    loadItems: function (items, appendItems, layout, speed) {
         if (this.$slider) {
             this._destroySlider();
             this._removeAll();
@@ -335,48 +341,60 @@ buildfire.components.carousel.view.prototype = {
 
         this._loadItems(items, appendItems);
         this._loadImages(speed);
+var me = this;
+        setTimeout(function(){
+            if (!me.items.length) {
+                me._hideSlider();
+            } else {
+                me._showSlider();
+            }
 
-        if (!this.items.length) {
-            this._hideSlider();
-        } else {
-            this._showSlider();
-        }
+            // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
+            if (items instanceof Array && !items.length && !appendItems) {
+                return;
+            }
+            me._applySlider(speed);
+        },1000);
 
-        // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
-        if (items instanceof Array && !items.length && !appendItems) {
-            return;
-        }
-        this._applySlider(speed);
     },
     // allows you to append a single item or an array of items
-    append: function(items){
-        if(!items)
+    append: function (items) {
+        if (!items)
             return;
         else if (!(items instanceof Array) && typeof(items) == "object")
-            items=[items];
+            items = [items];
 
-        this.loadItems(items,true);
+        this.loadItems(items, true);
     },
+
     _initDimensions: function (layout) {
         this.width = window.innerWidth;
         layout = layout || "WideScreen";
         if (layout == "WideScreen") {
-          this.height = Math.ceil(9 * this.width / 16);
+            this.height = Math.ceil(9 * this.width / 16);
         } else if (layout == "Square") {
             this.height = this.width;
         } else if (layout == "Cinema") {
             this.height = Math.ceil(1 * this.width / 2.39);
-        }else if(layout == "MobileScreen"){
-            this.height=(window.innerHeight/this.width)*this.width;
-            this.width=this.width;
+        } else if (layout == "MobileScreen") {
+            this.height = (window.innerHeight / this.width) * this.width;
+            this.width = this.width;
         }
 
         this.cssWidth = this.width + "px";
-        this.cssHeight = this.height + "px";
+        if (this.height > 380) {
+            this.cssHeight = '380px';
+        } else {
+            this.cssHeight = this.height + "px";
+        }
+
+        // Set Min height on carousel so doesn't push content down on load.
+        this._minHeight = '180px';
+        this._minHeight = this.cssHeight;
     },
     // remove all nodes from the slider
     _removeAll: function () {
-        if(!this.$slider)return;
+        if (!this.$slider)return;
         var slider = this.$slider.get(0);
         var fc = slider.firstChild;
         while (fc) {
@@ -419,24 +437,27 @@ buildfire.components.carousel.view.prototype = {
                 pagination: false,
                 items: 1,
                 itemsMobile: true,
-                autoHeight: false
+                lazyLoad: true,
+                autoHeight: false,
+                autoplay: true,
+                autoplaySpeed: 800
             };
 
-            sliderOptions.autoplay =(speed==0)? 0:3000;
-            sliderOptions.autoplaySpeed =speed?speed: 800;
+            sliderOptions.autoplay = (speed == 0) ? 0 : 3000;
+            sliderOptions.autoplayTimeout = speed ? speed : 5000;
             sliderOptions.loop = true;
             me.$slider.owlCarousel(sliderOptions);
         }
 
 
-        if(typeof speed === 'undefined')
+        if (typeof speed === 'undefined')
             $('.plugin-slide').show();
         else
             $('.my-slide').show();
     },
     // destroy the slider if it's already in the DOM
     _destroySlider: function () {
-        if(!this.$slider || !this.$slider.data) return;
+        if (!this.$slider || !this.$slider.data) return;
         var sliderData = this.$slider.data('owlCarousel');
         if (sliderData) {
             this.$slider.trigger('autoplay.stop.owl');
@@ -447,9 +468,13 @@ buildfire.components.carousel.view.prototype = {
     // render the slider wrapper HTML
     _renderSlider: function () {
         var me = this;
+
+        // Add min-height to carousel to prevent it from pushing content down.
+        me.selector.style['min-height'] = me._minHeight;
         me.selector.style.position = "relative";
         me.selector.style.top = "0px";
         me.selector.style.left = "0px";
+
         //me.selector.style.width = this.cssWidth;
         //me.selector.style.height = this.cssHeight;
         me.selector.className = "plugin-slider text-center";
@@ -460,22 +485,22 @@ buildfire.components.carousel.view.prototype = {
         var itemsLength = items.length;
 
         for (var i = 0; i < itemsLength; i++) {
-            this._appendItem(items[i], i,speed);
+            this._appendItem(items[i], i, speed);
         }
     },
     // add new slider to the DOM
-    _appendItem: function (item, index,speed) {
+    _appendItem: function (item, index, speed) {
         var slider = document.createElement("div");
 
-        if(typeof speed === 'undefined')
+        if (typeof speed === 'undefined')
             slider.className = "plugin-slide";
         else
             slider.className = "my-slide";
-		
-		if(0 != index) {
-			slider.style.display = "none";
-		}
-		
+
+        if (0 != index) {
+            slider.style.display = "none";
+        }
+
         slider.addEventListener("click", function () {
             buildfire.actionItems.execute(item, function (err, result) {
                 if (err) {
@@ -484,13 +509,56 @@ buildfire.components.carousel.view.prototype = {
             });
         });
 
-        var image = document.createElement("img");
-		
-        image.src = buildfire.components.carousel._cropImage(item.iconUrl, { width: this.width, height: this.height });
+        // Images
+        var me = this;
+
+        me.$slider = $(me.selector);
+        if (me.items.length > 1) {
+            // Add data-src attr for lazyLoad
+            console.log('two inout',item.iconUrl);
+            buildfire.imageLib.local.cropImage(item.iconUrl, {
+                width: this.width,
+                height: this.height
+            }, function (e, d) {
+                if (!e) {
+                    var image = document.createElement("img");
+                    console.log('two one',d);
+                    image.setAttribute('data-src', d);
+                    image.className = "owl-lazy";
+                    image.style.transform = "translateZ(0)";
+                    slider.appendChild(image);
+                    me.selector.appendChild(slider);
+                }
+                else
+                    console.log('two error');
+            });
+
+        } else {
+            // Add src since it will be static
+            // image.src = buildfire.components.carousel._cropImage(item.iconUrl, { width: this.width, height: this.height });
+console.log('two inout',item.iconUrl);
+            buildfire.imageLib.local.cropImage(item.iconUrl, {
+                width: this.width,
+                height: this.height
+            }, function (e, d) {
+                if (!e) {
+                    var image = document.createElement("img");
+                    console.log('two',d);
+                    image.src = d;
+                    image.style.transform = "translateZ(0)";
+                    slider.appendChild(image);
+                    me.selector.appendChild(slider);
+                }
+                else
+                console.log('two error');
+            });
+
+        }
+
         //image.style.width = this.'cssWidth';
         //image.style.height = this.cssHeight;
-        image.style.transform = "translateZ(0)";
-        slider.appendChild(image);
-        this.selector.appendChild(slider);
+        /*  image.style.transform = "translateZ(0)";
+         slider.appendChild(image);
+         this.selector.appendChild(slider);*/
     }
 };
