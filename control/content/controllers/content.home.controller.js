@@ -5,7 +5,7 @@
     .module('simpleSliderPluginContent')
     .controller('ContentHomeCtrl', ['TAG_NAMES', 'DataStore', '$scope', 'Buildfire',
         function (TAG_NAMES, DataStore, $scope, Buildfire) {
-
+            var tempCarousalData=null;
             var _data = {
                 "content":{
                     "carouselImages":[
@@ -32,7 +32,8 @@
                 "design":{
                     "mode":"",
                     "mode_gap":true
-                }
+                },
+                'default' : 'true'
             }
 
             var ContentHome=this;
@@ -62,7 +63,8 @@
                 "design":{
                     "mode":"",
                     "mode_gap":true
-                }
+                },
+                'default' : 'true'
             }
 //            ContentHome.data = angular.copy(_data);
 
@@ -72,7 +74,7 @@
             // this method will be called when a new item added to the list
             ContentHome.editor.onAddItems = function (items) {
                 console.log('Content info==========================',ContentHome.info);
-
+                tempCarousalData=items;
                 if(!ContentHome.data) {
                     ContentHome.data = angular.copy(_data);
                 }
@@ -176,11 +178,34 @@
             var tmrDelay = null;
             ContentHome.saveDataWithDelay = function (newObj) {
                 if (newObj) {
+
                     if (isUnchanged(newObj)) {
                         return;
                     }
                     if (tmrDelay) {
                         clearTimeout(tmrDelay);
+                    }
+                    if(newObj.default){
+                        newObj=  {
+                            "content":{
+                                "carouselImages":[
+
+                                ]
+                            },
+                            "settings":{
+                                "speed":"0"
+                            },
+                            "design":{
+                                "mode":"",
+                                "mode_gap":true
+                            }
+                        };
+                        if(tempCarousalData){
+                            ContentHome.editor.loadItems(tempCarousalData);
+                        }else{
+                            ContentHome.editor.loadItems([]);
+                        }
+
                     }
                     tmrDelay = setTimeout(function () {
                         ContentHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
