@@ -33,7 +33,7 @@
                     "mode":"",
                     "mode_gap":true
                 }
-            }
+            };
 
             var ContentHome=this;
             ContentHome.masterData = {
@@ -63,7 +63,7 @@
                     "mode":"",
                     "mode_gap":true
                 }
-            }
+            };
 //            ContentHome.data = angular.copy(_data);
 
             // create a new instance of the buildfire carousel editor
@@ -101,9 +101,22 @@
 
             // this method will be called when you change the order of items
             ContentHome.editor.onOrderChange = function (item, oldIndex, newIndex) {
-                var temp = ContentHome.data.content.carouselImages[oldIndex];
-                ContentHome.data.content.carouselImages[oldIndex] = ContentHome.data.content.carouselImages[newIndex];
-                ContentHome.data.content.carouselImages[newIndex] = temp;
+              var items = ContentHome.data.content.carouselImages;
+
+              var tmp = items[oldIndex];
+
+              if (oldIndex < newIndex) {
+                for (var i = oldIndex + 1; i <= newIndex; i++) {
+                  items[i - 1] = items[i];
+                }
+              } else {
+                for (var i = oldIndex - 1; i >= newIndex; i--) {
+                  items[i + 1] = items[i];
+                }
+              }
+              items[newIndex] = tmp;
+
+              ContentHome.data.content.carouselImages = items;
                 if (!$scope.$$phase)$scope.$digest();
             };
 
