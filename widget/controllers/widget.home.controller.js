@@ -31,7 +31,7 @@
                   "speed":"2"
               },
               "design":{
-                  "mode":"",
+                  "mode":"MobileScreen",
                   "mode_gap":true
               }
           }
