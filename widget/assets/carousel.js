@@ -515,14 +515,13 @@ var me = this;
         me.$slider = $(me.selector);
         if (me.items.length > 1) {
             // Add data-src attr for lazyLoad
-            console.log('two inout',item.iconUrl);
             buildfire.imageLib.local.cropImage(item.iconUrl, {
                 width: this.width,
                 height: this.height
             }, function (e, d) {
                 if (!e) {
                     var image = document.createElement("img");
-                    console.log('two one',d);
+                    $("#urlsa").html('<div>' + d + '</div>');
                     image.setAttribute('data-src', d);
                     image.className = "owl-lazy";
                     image.style.transform = "translateZ(0)";
@@ -536,7 +535,6 @@ var me = this;
         } else {
             // Add src since it will be static
             // image.src = buildfire.components.carousel._cropImage(item.iconUrl, { width: this.width, height: this.height });
-console.log('two inout',item.iconUrl);
             buildfire.imageLib.local.cropImage(item.iconUrl, {
                 width: this.width,
                 height: this.height
@@ -544,6 +542,7 @@ console.log('two inout',item.iconUrl);
                 if (!e) {
                     var image = document.createElement("img");
                     console.log('two',d);
+                    $("#urlsa").append('<div>' + d + '</div>');
                     image.src = d;
                     image.style.transform = "translateZ(0)";
                     slider.appendChild(image);
