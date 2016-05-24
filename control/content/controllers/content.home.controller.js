@@ -5,23 +5,23 @@
     .module('simpleSliderPluginContent')
     .controller('ContentHomeCtrl', ['TAG_NAMES', 'DataStore', '$scope', 'Buildfire',
         function (TAG_NAMES, DataStore, $scope, Buildfire) {
-
+            var tempCarousalData=null;
             var _data = {
                 "content":{
                     "carouselImages":[
                         {
                             "action":"noAction",
-                            "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7bdab0c0-f82b-11e5-8dca-3f9a537544dc.jpg?fit=crop&w=342&h=193",
+                            "iconUrl":"http://buildfire.imgix.net/b55ee984-a8e8-11e5-88d3-124798dea82d/1dc29a50-11be-11e6-ad08-375cc71b6ca7.jpg",
                             "title":"image"
                         },
                         {
                             "action":"noAction",
-                            "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7cc44d70-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                            "iconUrl":"http://buildfire.imgix.net/b55ee984-a8e8-11e5-88d3-124798dea82d/1cee3350-11be-11e6-92ea-27ed66023d52.jpg",
                             "title":"image"
                         },
                         {
                             "action":"noAction",
-                            "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7d9a8930-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                            "iconUrl":"http://buildfire.imgix.net/b55ee984-a8e8-11e5-88d3-124798dea82d/1e40a3f0-11be-11e6-ad08-375cc71b6ca7.jpg",
                             "title":"image"
                         }
                     ]
@@ -30,9 +30,10 @@
                     "speed":"2"
                 },
                 "design":{
-                    "mode":"",
+                    "mode":"MobileScreen",
                     "mode_gap":true
-                }
+                },
+                'default' : 'true'
             }
 
             var ContentHome=this;
@@ -62,7 +63,8 @@
                 "design":{
                     "mode":"",
                     "mode_gap":true
-                }
+                },
+                'default' : 'true'
             }
 //            ContentHome.data = angular.copy(_data);
 
@@ -72,7 +74,7 @@
             // this method will be called when a new item added to the list
             ContentHome.editor.onAddItems = function (items) {
                 console.log('Content info==========================',ContentHome.info);
-
+                tempCarousalData=items;
                 if(!ContentHome.data) {
                     ContentHome.data = angular.copy(_data);
                 }
@@ -101,9 +103,22 @@
 
             // this method will be called when you change the order of items
             ContentHome.editor.onOrderChange = function (item, oldIndex, newIndex) {
-                var temp = ContentHome.data.content.carouselImages[oldIndex];
-                ContentHome.data.content.carouselImages[oldIndex] = ContentHome.data.content.carouselImages[newIndex];
-                ContentHome.data.content.carouselImages[newIndex] = temp;
+              var items = ContentHome.data.content.carouselImages;
+
+              var tmp = items[oldIndex];
+
+              if (oldIndex < newIndex) {
+                for (var i = oldIndex + 1; i <= newIndex; i++) {
+                  items[i - 1] = items[i];
+                }
+              } else {
+                for (var i = oldIndex - 1; i >= newIndex; i--) {
+                  items[i + 1] = items[i];
+                }
+              }
+              items[newIndex] = tmp;
+
+              ContentHome.data.content.carouselImages = items;
                 if (!$scope.$$phase)$scope.$digest();
             };
 
@@ -176,11 +191,34 @@
             var tmrDelay = null;
             ContentHome.saveDataWithDelay = function (newObj) {
                 if (newObj) {
+
                     if (isUnchanged(newObj)) {
                         return;
                     }
                     if (tmrDelay) {
                         clearTimeout(tmrDelay);
+                    }
+                    if(newObj.default){
+                        newObj=  {
+                            "content":{
+                                "carouselImages":[
+
+                                ]
+                            },
+                            "settings":{
+                                "speed":"0"
+                            },
+                            "design":{
+                                "mode":"",
+                                "mode_gap":true
+                            }
+                        };
+                        if(tempCarousalData){
+                            ContentHome.editor.loadItems(tempCarousalData);
+                        }else{
+                            ContentHome.editor.loadItems([]);
+                        }
+
                     }
                     tmrDelay = setTimeout(function () {
                         ContentHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);

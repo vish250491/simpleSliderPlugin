@@ -12,17 +12,17 @@
                   "carouselImages":[
                       {
                           "action":"noAction",
-                          "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7bdab0c0-f82b-11e5-8dca-3f9a537544dc.jpg?fit=crop&w=342&h=193",
+                          "iconUrl":"http://buildfire.imgix.net/b55ee984-a8e8-11e5-88d3-124798dea82d/1dc29a50-11be-11e6-ad08-375cc71b6ca7.jpg",
                           "title":"image"
                       },
                       {
                           "action":"noAction",
-                          "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7cc44d70-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                          "iconUrl":"http://buildfire.imgix.net/b55ee984-a8e8-11e5-88d3-124798dea82d/1cee3350-11be-11e6-92ea-27ed66023d52.jpg",
                           "title":"image"
                       },
                       {
                           "action":"noAction",
-                          "iconUrl":"http://buildfire.imgix.net/1459529554163-05176145874429494/7d9a8930-f82b-11e5-a9d8-55461c8fe352.jpg?fit=crop&w=342&h=193",
+                          "iconUrl":"http://buildfire.imgix.net/b55ee984-a8e8-11e5-88d3-124798dea82d/1e40a3f0-11be-11e6-ad08-375cc71b6ca7.jpg",
                           "title":"image"
                       }
                   ]
@@ -31,7 +31,7 @@
                   "speed":"2"
               },
               "design":{
-                  "mode":"",
+                  "mode":"MobileScreen",
                   "mode_gap":true
               }
           }
@@ -102,14 +102,14 @@
                   if (!WidgetHome.data.content)
                       WidgetHome.data.content = {};
                       WidgetHome.data.content.carouselImages = event.data.content.carouselImages;
-                      $scope.$emit("Carousel:LOADED");
+                      //$scope.$emit("Carousel:LOADED");
                       if (!$scope.$$phase)$scope.$digest();
               }
               if(event.data && event.data.settings){
                   if (!WidgetHome.data.settings)
                       WidgetHome.data.settings = {};
                   WidgetHome.data.settings.speed = event.data.settings.speed;
-                  $scope.$emit("Carousel:LOADED");
+                  //$scope.$emit("Carousel:LOADED");
                   if (!$scope.$$phase)$scope.$digest();
               }
               if(event.data && event.data.design){
@@ -125,9 +125,10 @@
                   else
                       WidgetHome.data.design.mode_gap=true;
 
-                  $scope.$emit("Carousel:LOADED");
+
                   if (!$scope.$$phase)$scope.$digest();
               }
+              $scope.$emit("Carousel:LOADED");
           }
         });
 
