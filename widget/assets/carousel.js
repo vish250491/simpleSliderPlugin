@@ -513,7 +513,7 @@ buildfire.components.carousel.view.prototype = {
                 width: this.width,
                 height: this.height
             }, function (err, result) {
-                if (!e) {
+                if (!err) {
                     image.setAttribute('data-src', result);
                     image.className = "owl-lazy";
                     image.style.transform = "translateZ(0)";
@@ -531,7 +531,7 @@ buildfire.components.carousel.view.prototype = {
                 width: this.width,
                 height: this.height
             }, function (err, result) {
-                if (!e) {
+                if (!err) {
                     image.src = result;
                     image.style.transform = "translateZ(0)";
                     slider.appendChild(image);
