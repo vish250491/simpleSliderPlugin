@@ -92,16 +92,16 @@ buildfire.components.carousel.editor.prototype = {
         }
     },
     // allows you to append a single item or an array of items
-    append: function (items) {
-        if (!items)
+    append: function(items){
+        if(!items)
             return;
-        else if (!(items instanceof Array) && typeof(items) == "object")
-            items = [items];
+        else if(!(items instanceof Array) && typeof(items) == "object")
+            items=[items];
 
-        this.loadItems(items, true);
+        this.loadItems(items,true);
     },
     // remove all items in list
-    clear: function () {
+    clear: function(){
         this._removeAll();
         this.onDeleteItem();
     },
@@ -138,7 +138,7 @@ buildfire.components.carousel.editor.prototype = {
         editButton.className = "text-primary text";
         deleteButton.className = "btn-icon btn-delete-icon btn-danger transition-third";
 
-        image.src = buildfire.components.carousel._resizeImage(item.iconUrl, {width: 80, height: 40});
+        image.src = buildfire.components.carousel._resizeImage(item.iconUrl, { width: 80, height: 40 });
         title.innerHTML = item.title;
         editButton.innerHTML = (item.action && item.action != "noAction") ? "Edit Action/Link" : "Add Action/Link";
 
@@ -167,10 +167,7 @@ buildfire.components.carousel.editor.prototype = {
                     me.items[itemIndex] = actionItem;
                     item = actionItem;
                     me.onItemChange(actionItem, itemIndex);
-                    parentElement.querySelector("img").src = buildfire.components.carousel._resizeImage(actionItem.iconUrl, {
-                        width: 80,
-                        height: 40
-                    });
+                    parentElement.querySelector("img").src = buildfire.components.carousel._resizeImage(actionItem.iconUrl, { width: 80, height: 40 });
                     parentElement.querySelector(".title").innerHTML = actionItem.title;
                     currentTarget.innerHTML = actionItem.action && actionItem.action != "noAction" ? "Edit Action" : "Add Action";
                 });
@@ -221,9 +218,9 @@ buildfire.components.carousel.editor.prototype = {
         var oldIndex = 0;
         // initialize add new item button
         me.selector.querySelector(".add-new-carousel").addEventListener("click", function () {
-            me._openImageLib(function (imageUrls) {
+            me._openImageLib( function (imageUrls) {
                 var newItems = [], currentItem = null;
-                for (var i = 0; i < imageUrls.length; i++) {
+                for (var i = 0; i < imageUrls.length ; i++) {
                     currentItem = buildfire.actionItems.create(null, imageUrls[i], 'image');
                     if (!currentItem.action) {
                         currentItem.action = "noAction";
@@ -233,7 +230,7 @@ buildfire.components.carousel.editor.prototype = {
                     currentItem = null;
                 }
 
-                if (newItems.length) {
+                if(newItems.length) {
                     me.loadItems(newItems, true);
                     me.onAddItems(newItems);
                 }
@@ -267,7 +264,7 @@ buildfire.components.carousel.editor.prototype = {
     },
     // a wrapper method over buildfire showDialog
     _openActionItem: function (item, callback) {
-        buildfire.actionItems.showDialog(item, {showIcon: true, allowNoAction: true}, function (err, actionItem) {
+        buildfire.actionItems.showDialog(item, { showIcon: true, allowNoAction: true }, function (err, actionItem) {
             if (err)
                 console.error("Error getting item details: ", err);
             else {
@@ -279,7 +276,7 @@ buildfire.components.carousel.editor.prototype = {
     },
     // a wrapper method over buildfire imageLib showDialog
     _openImageLib: function (callback) {
-        buildfire.imageLib.showDialog({multiSelect: true, showIcons: false}, function (err, result) {
+        buildfire.imageLib.showDialog({ multiSelect : true ,showIcons :false }, function (err, result) {
             if (err)
                 console.error("Error getting images: ", err);
             else
@@ -301,7 +298,7 @@ buildfire.components.carousel.editor.prototype = {
 };
 
 // This is the class that will be used in the mobile
-buildfire.components.carousel.view = function (selector, items, layout, speed) {
+buildfire.components.carousel.view = function (selector, items, layout,speed) {
     if (typeof($.fn) != "object" || !($.fn && $.fn.owlCarousel)) {
         throw ("please add owlCarousel.js first to use carousel component");
     }
@@ -309,19 +306,19 @@ buildfire.components.carousel.view = function (selector, items, layout, speed) {
     this.items = [];
     this._initDimensions(layout);
     this._loadItems(items, false);
-    this.init(selector, speed);
+    this.init(selector,speed);
     window.dispatchEvent(new CustomEvent('resize'));
 };
 
 // Carousel view methods
 buildfire.components.carousel.view.prototype = {
     // will be called to initialize the setting in the constructor
-    init: function (selector, speed) {
+    init: function (selector,speed) {
         this.selector = buildfire.components.carousel._getDomSelector(selector);
         this._renderSlider();
         this._loadImages();
         if (this.items.length) {
-            if (typeof speed === 'undefined')
+            if(typeof speed === 'undefined')
                 this._applySlider();
             else
                 this._applySlider(speed);
@@ -330,7 +327,7 @@ buildfire.components.carousel.view.prototype = {
         }
     },
     // this method allows you to append or replace slider images
-    loadItems: function (items, appendItems, layout, speed) {
+    loadItems: function (items, appendItems, layout,speed) {
         if (this.$slider) {
             this._destroySlider();
             this._removeAll();
@@ -341,30 +338,27 @@ buildfire.components.carousel.view.prototype = {
 
         this._loadItems(items, appendItems);
         this._loadImages(speed);
-var me = this;
-        setTimeout(function(){
-            if (!me.items.length) {
-                me._hideSlider();
-            } else {
-                me._showSlider();
-            }
 
-            // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
-            if (items instanceof Array && !items.length && !appendItems) {
-                return;
-            }
-            me._applySlider(speed);
-        },1000);
+        if (!this.items.length) {
+            this._hideSlider();
+        } else {
+            this._showSlider();
+        }
 
+        // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
+        if (items instanceof Array && !items.length && !appendItems) {
+            return;
+        }
+        this._applySlider(speed);
     },
     // allows you to append a single item or an array of items
-    append: function (items) {
-        if (!items)
+    append: function(items){
+        if(!items)
             return;
         else if (!(items instanceof Array) && typeof(items) == "object")
-            items = [items];
+            items=[items];
 
-        this.loadItems(items, true);
+        this.loadItems(items,true);
     },
 
     _initDimensions: function (layout) {
@@ -376,15 +370,15 @@ var me = this;
             this.height = this.width;
         } else if (layout == "Cinema") {
             this.height = Math.ceil(1 * this.width / 2.39);
-        } else if (layout == "MobileScreen") {
-            this.height = (window.innerHeight / this.width) * this.width;
-            this.width = this.width;
+        }else if(layout == "MobileScreen"){
+            this.height=(window.innerHeight/this.width)*this.width;
+            this.width=this.width;
         }
 
         this.cssWidth = this.width + "px";
-        if (this.height > 380) {
+        if(this.height > 380){
             this.cssHeight = '380px';
-        } else {
+        }else{
             this.cssHeight = this.height + "px";
         }
 
@@ -394,7 +388,7 @@ var me = this;
     },
     // remove all nodes from the slider
     _removeAll: function () {
-        if (!this.$slider)return;
+        if(!this.$slider)return;
         var slider = this.$slider.get(0);
         var fc = slider.firstChild;
         while (fc) {
@@ -437,27 +431,27 @@ var me = this;
                 pagination: false,
                 items: 1,
                 itemsMobile: true,
-                lazyLoad: true,
+                lazyLoad:true,
                 autoHeight: false,
                 autoplay: true,
-                autoplaySpeed: 800
+                autoplaySpeed:800
             };
 
-            sliderOptions.autoplay = (speed == 0) ? 0 : 3000;
-            sliderOptions.autoplayTimeout = speed ? speed : 5000;
+            sliderOptions.autoplay =(speed==0)? 0:3000;
+            sliderOptions.autoplayTimeout =speed? speed:5000;
             sliderOptions.loop = true;
             me.$slider.owlCarousel(sliderOptions);
         }
 
 
-        if (typeof speed === 'undefined')
+        if(typeof speed === 'undefined')
             $('.plugin-slide').show();
         else
             $('.my-slide').show();
     },
     // destroy the slider if it's already in the DOM
     _destroySlider: function () {
-        if (!this.$slider || !this.$slider.data) return;
+        if(!this.$slider || !this.$slider.data) return;
         var sliderData = this.$slider.data('owlCarousel');
         if (sliderData) {
             this.$slider.trigger('autoplay.stop.owl');
@@ -485,19 +479,19 @@ var me = this;
         var itemsLength = items.length;
 
         for (var i = 0; i < itemsLength; i++) {
-            this._appendItem(items[i], i, speed);
+            this._appendItem(items[i], i,speed);
         }
     },
     // add new slider to the DOM
-    _appendItem: function (item, index, speed) {
+    _appendItem: function (item, index,speed) {
         var slider = document.createElement("div");
 
-        if (typeof speed === 'undefined')
+        if(typeof speed === 'undefined')
             slider.className = "plugin-slide";
         else
             slider.className = "my-slide";
 
-        if (0 != index) {
+        if(0 != index) {
             slider.style.display = "none";
         }
 
@@ -511,25 +505,23 @@ var me = this;
 
         // Images
         var me = this;
-
+        var image = document.createElement("img");
         me.$slider = $(me.selector);
         if (me.items.length > 1) {
             // Add data-src attr for lazyLoad
             buildfire.imageLib.local.cropImage(item.iconUrl, {
                 width: this.width,
                 height: this.height
-            }, function (e, d) {
+            }, function (err, result) {
                 if (!e) {
-                    var image = document.createElement("img");
-                    $("#urlsa").html('<div>' + d + '</div>');
-                    image.setAttribute('data-src', d);
+                    image.setAttribute('data-src', result);
                     image.className = "owl-lazy";
                     image.style.transform = "translateZ(0)";
                     slider.appendChild(image);
                     me.selector.appendChild(slider);
                 }
                 else
-                    console.log('two error');
+                    console.log('Error occurred while cropping image: ', err);
             });
 
         } else {
@@ -538,18 +530,15 @@ var me = this;
             buildfire.imageLib.local.cropImage(item.iconUrl, {
                 width: this.width,
                 height: this.height
-            }, function (e, d) {
+            }, function (err, result) {
                 if (!e) {
-                    var image = document.createElement("img");
-                    console.log('two',d);
-                    $("#urlsa").append('<div>' + d + '</div>');
-                    image.src = d;
+                    image.src = result;
                     image.style.transform = "translateZ(0)";
                     slider.appendChild(image);
                     me.selector.appendChild(slider);
                 }
                 else
-                console.log('two error');
+                console.log('Error occurred while cropping image: ', err);
             });
 
         }
