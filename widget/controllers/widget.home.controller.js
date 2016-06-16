@@ -53,6 +53,12 @@
               }
           });
 
+
+          //Refresh list of bookmarks on pulling the tile bar
+          Buildfire.datastore.onRefresh(function () {
+              init();
+          });
+
         var init = function () {
           var success = function (result) {
               if(!result.id){
