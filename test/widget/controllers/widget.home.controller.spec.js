@@ -15,7 +15,7 @@ describe('Unit : Controller - WidgetHomeCtrl', function () {
 
         Datastore=jasmine.createSpyObj('Datastore',['save','get']);
         Buildfire= jasmine.createSpyObj('Buildfire',['']);
-        Buildfire.datastore=jasmine.createSpyObj('datastore',['onUpdate','']);
+        Buildfire.datastore=jasmine.createSpyObj('datastore',['onUpdate','onRefresh']);
         Buildfire.components=jasmine.createSpyObj('components',['','']);
         Buildfire.components.carousel=jasmine.createSpyObj('carousel',['view','']);
 
