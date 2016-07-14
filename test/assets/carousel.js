@@ -140,7 +140,7 @@ buildfire.components.carousel.editor.prototype = {
 
         image.src = buildfire.components.carousel._resizeImage(item.iconUrl, { width: 80, height: 40 });
         title.innerHTML = item.title;
-        editButton.innerHTML = (item.action && item.action != "noAction") ? "Edit Action" : "Add Action";
+        editButton.innerHTML = (item.action && item.action != "noAction") ? "Edit Action/Link" : "Add Action/Link";
 
         // Append elements to the DOM
         wrapper.appendChild(moveHandle);
@@ -298,7 +298,7 @@ buildfire.components.carousel.editor.prototype = {
 };
 
 // This is the class that will be used in the mobile
-buildfire.components.carousel.view = function (selector, items, layout) {
+buildfire.components.carousel.view = function (selector, items, layout,speed) {
 	if (typeof($.fn) != "object" || !($.fn && $.fn.owlCarousel)) {
         throw ("please add owlCarousel.js first to use carousel component");
     }
@@ -306,25 +306,32 @@ buildfire.components.carousel.view = function (selector, items, layout) {
     this.items = [];
     this._initDimensions(layout);
     this._loadItems(items, false);
-    this.init(selector);
-	//window.dispatchEvent(new CustomEvent('resize'));
+    this.init(selector,speed);
+	window.dispatchEvent(new CustomEvent('resize'));
 };
 
 // Carousel view methods
 buildfire.components.carousel.view.prototype = {
     // will be called to initialize the setting in the constructor
-    init: function (selector) {
+    init: function (selector,speed) {
         this.selector = buildfire.components.carousel._getDomSelector(selector);
         this._renderSlider();
-        this._loadImages();
-        if (this.items.length) {
-            this._applySlider();
-        } else {
-            this._hideSlider();
-        }
+
+        var that = this;
+
+        this._loadImages(speed, function(){
+            if (that.items.length) {
+                if(typeof speed === 'undefined')
+                    that._applySlider();
+                else
+                    that._applySlider(speed);
+            } else {
+                that._hideSlider();
+            }
+        });
     },
     // this method allows you to append or replace slider images
-    loadItems: function (items, appendItems, layout) {
+    loadItems: function (items, appendItems, layout,speed) {
         if (this.$slider) {
             this._destroySlider();
             this._removeAll();
@@ -334,19 +341,22 @@ buildfire.components.carousel.view.prototype = {
         this._renderSlider();
 
         this._loadItems(items, appendItems);
-        this._loadImages();
 
-        if (!this.items.length) {
-            this._hideSlider();
-        } else {
-            this._showSlider();
-        }
+        var that = this;
 
-        // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
-        if (items instanceof Array && !items.length && !appendItems) {
-            return;
-        }
-        this._applySlider();        
+        this._loadImages(speed, function(){
+            if (!that.items.length) {
+                that._hideSlider();
+            } else {
+                that._showSlider();
+            }
+
+            // if items.length == 0 and appendItems == undefined no need to init the slider it will break if we do so
+            if (items instanceof Array && !items.length && !appendItems) {
+                return;
+            }
+            that._applySlider(speed);
+        });
     },
     // allows you to append a single item or an array of items
     append: function(items){
@@ -357,19 +367,31 @@ buildfire.components.carousel.view.prototype = {
 
         this.loadItems(items,true);
     },
+
     _initDimensions: function (layout) {
         this.width = window.innerWidth;
         layout = layout || "WideScreen";
         if (layout == "WideScreen") {
-            this.height = Math.ceil(9 * this.width / 16);
+          this.height = Math.ceil(9 * this.width / 16);
         } else if (layout == "Square") {
             this.height = this.width;
         } else if (layout == "Cinema") {
             this.height = Math.ceil(1 * this.width / 2.39);
+        }else if(layout == "MobileScreen"){
+            this.height=(window.innerHeight/this.width)*this.width;
+            this.width=this.width;
         }
 
         this.cssWidth = this.width + "px";
-        this.cssHeight = this.height + "px";
+		if(this.height > 380){
+			this.cssHeight = '380px';
+		}else{
+			this.cssHeight = this.height + "px";			
+		}
+
+		// Set Min height on carousel so doesn't push content down on load.
+		this._minHeight = '180px';
+		this._minHeight = this.cssHeight;
     },
     // remove all nodes from the slider
     _removeAll: function () {
@@ -402,29 +424,37 @@ buildfire.components.carousel.view.prototype = {
         this.selector.style.display = "block";
     },
     // initialize the slider
-    _applySlider: function () {
-        this.$slider = $(this.selector);
-        if (this.items.length > 1) {
+    _applySlider: function (speed) {
+        var me = this;
+        me.$slider = $(me.selector);
+        if (me.items.length > 1) {
 
             var sliderOptions = {
                 navigation: false,
-                dots: true,
+                dots: false,
                 slideSpeed: 800,
                 paginationSpeed: 800,
                 singleItem: true,
                 pagination: false,
                 items: 1,
                 itemsMobile: true,
-                autoHeight: false
+				lazyLoad:true,
+                autoHeight: false,
+                autoplay: true,
+                autoplaySpeed:800
             };
 
-            sliderOptions.autoplay = 3000;
-            sliderOptions.autoplaySpeed = 800;
+            sliderOptions.autoplay =(speed==0)? 0:3000;
+            sliderOptions.autoplayTimeout =speed? speed:5000;
             sliderOptions.loop = true;
-
-            this.$slider.owlCarousel(sliderOptions);
+            me.$slider.owlCarousel(sliderOptions);
         }
 
+
+        if(typeof speed === 'undefined')
+            $('.plugin-slide').show();
+        else
+            $('.my-slide').show();
     },
     // destroy the slider if it's already in the DOM
     _destroySlider: function () {
@@ -439,27 +469,51 @@ buildfire.components.carousel.view.prototype = {
     // render the slider wrapper HTML
     _renderSlider: function () {
         var me = this;
+
+		// Add min-height to carousel to prevent it from pushing content down.
+		me.selector.style['min-height'] = me._minHeight;
         me.selector.style.position = "relative";
         me.selector.style.top = "0px";
         me.selector.style.left = "0px";
+		
         //me.selector.style.width = this.cssWidth;
         //me.selector.style.height = this.cssHeight;
-        me.selector.className = this.selector.className + " plugin-slider text-center";
+        me.selector.className = "plugin-slider text-center";
     },
     // loop and append the images to the DOM
-    _loadImages: function () {
+    _loadImages: function (speed, callback) {
         var items = this.items;
         var itemsLength = items.length;
 
+        var pending =  itemsLength;
+
+        if(itemsLength == 0){
+            callback();
+        }
+
         for (var i = 0; i < itemsLength; i++) {
-            this._appendItem(items[i]);
+            this._appendItem(items[i], i,speed, function(){
+                pending--;
+
+                if(pending == 0){
+                    callback();
+                }
+            });
         }
     },
     // add new slider to the DOM
-    _appendItem: function (item) {
+    _appendItem: function (item, index, speed, callback) {
         var slider = document.createElement("div");
-        slider.className = "plugin-slide";
 
+        if(typeof speed === 'undefined')
+            slider.className = "plugin-slide";
+        else
+            slider.className = "my-slide";
+		
+		if(0 != index) {
+			slider.style.display = "none";
+		}
+		
         slider.addEventListener("click", function () {
             buildfire.actionItems.execute(item, function (err, result) {
                 if (err) {
@@ -468,13 +522,25 @@ buildfire.components.carousel.view.prototype = {
             });
         });
 
+        // Images
+        var me = this;
         var image = document.createElement("img");
+        me.$slider = $(me.selector);
 
-        image.src = buildfire.components.carousel._cropImage(item.iconUrl, { width: this.width, height: this.height });
-        //image.style.width = this.'cssWidth';
-        //image.style.height = this.cssHeight;
-        image.style.transform = "translateZ(0)";
-        slider.appendChild(image);
-        this.selector.appendChild(slider);
+        buildfire.imageLib.local.cropImage(item.iconUrl, {
+            width: this.width,
+            height: this.height
+        }, function (err, result) {
+            if (!err) {
+                image.src = result;
+                image.style.transform = "translateZ(0)";
+                slider.appendChild(image);
+                me.selector.appendChild(slider);
+            }
+            else
+                console.log('Error occurred while cropping image: ', err);
+
+            callback();
+        });
     }
 };
