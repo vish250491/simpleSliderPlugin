@@ -211,10 +211,13 @@
                             "design":{
                                 "mode":"",
                                 "mode_gap":true
-                            }
+                            },
+                            "default" : false
                         };
+                        ContentHome.data=newObj;
                         if(tempCarousalData){
                             ContentHome.editor.loadItems(tempCarousalData);
+                            newObj.content.carouselImages=tempCarousalData;
                         }else{
                             ContentHome.editor.loadItems([]);
                         }
@@ -222,6 +225,7 @@
                     }
                     tmrDelay = setTimeout(function () {
                         ContentHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
+                        tempCarousalData=null;
                     }, 1000);
                 }
             };
