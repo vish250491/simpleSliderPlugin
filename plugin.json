@@ -3,6 +3,7 @@
 ,"pluginName":"Image Gallery and Info Slider",
   "pluginDescription":"Use this plugin to showcase your images & photos in an image gallery or use it to provide slide-by-slide instructions."
 ,"supportEmail":"support@buildfire.com"
+,"offlineModeEnabled": true
 ,"supportSite":"http://support.appdocumentation.com/knowledge-base/slider-plugin-tutorial/"
 ,"pluginIcon": "icon.png"
 ,"control":{
