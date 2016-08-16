@@ -65,10 +65,10 @@
 <body class="no-scroll">
 <div ng-controller="WidgetHomeCtrl as WidgetHome">
     <div ng-show="WidgetHome.data.design.mode_gap" id="gapdiv" style="padding-bottom: 50%"></div>
-    <img ng-src="{{WidgetHome.data.design.mode == 'MobileScreen' && '../../../styles/media/holder-1x1.gif' || '../../../styles/media/holder-16x9.gif'}}"
+    <img ng-src="{{'../../../styles/media/holder-16x9.gif'}}"
          ng-if="WidgetHome.data.content.carouselImages.length"
          style="width: 100%;position: absolute;"
-         ng-style="WidgetHome.data.design.mode == 'MobileScreen' ? {'height':'100%'} : {}"/>
+         ng-style="WidgetHome.data.design.mode == 'MobileScreen' ? {'height':'100%', 'padding-bottom': '50%', 'padding-top': '50%'} : {}"/>
 
     <div id="carousel">
 
