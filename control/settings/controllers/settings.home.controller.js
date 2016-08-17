@@ -33,7 +33,7 @@
             "mode":"MobileScreen",
             "mode_gap":true
           }
-        }
+        };
 
         var SettingsHome=this;
         SettingsHome.masterData = {
@@ -63,7 +63,7 @@
             "mode":"MobileScreen",
             "mode_gap":true
           }
-        }
+        };
         SettingsHome.data = angular.copy(_data);
 
 
@@ -135,12 +135,18 @@
             if (isUnchanged(newObj)) {
               return;
             }
+            if(Number(newObj.settings.speed)>99){
+              return;
+            }
             if (tmrDelay) {
               clearTimeout(tmrDelay);
             }
+
             tmrDelay = setTimeout(function () {
-              SettingsHome.saveData(JSON.parse(angular.toJson(newObj)), TAG_NAMES.SIMPLE_SLIDER_INFO);
-            },1000);
+              if(Number(newObj.settings.speed)<=99) {
+                SettingsHome.saveData(JSON.parse(angular.toJson(angular.copy(newObj))), TAG_NAMES.SIMPLE_SLIDER_INFO);
+              }
+            }, 0);
           }
         };
 
